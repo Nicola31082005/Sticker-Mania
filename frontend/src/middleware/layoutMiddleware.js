@@ -4,25 +4,50 @@ const main = document.querySelector("#root");
 
 const layoutTemplate = (bodyTemplate) => html`
   <!-- Navbar -->
-  <nav class="bg-blue-600 text-white p-4">
-    <div class="container mx-auto flex justify-between">
-      <a href="/" class="text-xl font-bold">Finance Tracker</a>
-      <div class="space-x-4">
-        <a href="/" class="hover:underline">Home</a>
-        <a href="/about" class="hover:underline">About</a>
-        <a href="/dashboard" class="hover:underline">Dashboard</a>
+  <nav class="bg-gray-900 text-white p-4 sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Left Side: Logo -->
+      <a href="/" class="text-xl font-bold flex items-center space-x-2 hover:text-amber-500 transition-colors">
+        <img src="/public/images/logo.png" alt="Logo" class="w-8 h-8" />
+        <span>Sticker Creator</span>
+      </a>
+
+      <!-- Center Navigation -->
+      <div class="flex space-x-6">
+        <a href="/" class="hover:text-amber-500 transition-colors">Home</a>
+        <a href="/create" class="hover:text-amber-500 transition-colors">Create</a>
+        <a href="/about" class="hover:text-amber-500 transition-colors">About</a>
+        <a href="/profile" class="hover:text-amber-500 transition-colors">Profile</a>
+      </div>
+
+      <!-- Right Side: Auth Links -->
+      <div class="flex space-x-4">
+        <a href="/login" class="hover:text-amber-500 transition-colors">Login</a>
+        <a href="/register" class="hover:text-amber-500 transition-colors">Register</a>
+        <a href="/logout" class="hover:text-amber-500 transition-colors">Logout</a>
       </div>
     </div>
   </nav>
 
   <!-- Main Content -->
-  ${bodyTemplate}
+  <main class="flex-grow bg-gradient-to-b from-gray-50 to-gray-100">${bodyTemplate}</main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-8">
+    <div class="container mx-auto space-y-4">
+      <p class="text-lg">&copy; 2024 Sticker Creator. All rights reserved.</p>
+      <div class="flex justify-center space-x-6">
+        <a href="/about" class="hover:text-amber-500 transition-colors">About</a>
+        <a href="/contact" class="hover:text-amber-500 transition-colors">Contact</a>
+        <a href="/faq" class="hover:text-amber-500 transition-colors">FAQ</a>
+      </div>
+    </div>
+  </footer>
 `;
 
 export function layoutView(ctx, next) {
   ctx.render = (bodyTemplate) => {
     render(layoutTemplate(bodyTemplate), main);
   };
-
   next();
 }
