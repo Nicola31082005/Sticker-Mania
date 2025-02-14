@@ -12,6 +12,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "lite-html": "^0.2.4",
+    "page": "^1.11.6",
     "vite": "^6.1.0"
   }
 }
