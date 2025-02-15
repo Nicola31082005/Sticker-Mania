@@ -13,17 +13,22 @@ const layoutTemplate = (bodyTemplate) => html`
       </a>
 
       <!-- Center Navigation -->
-      <div class="flex space-x-6">
+      <div class="flex space-x-6 items-center">
         <a href="/" class="hover:text-amber-500 transition-colors">Home</a>
+        <span class="text-gray-500">|</span>
         <a href="/create" class="hover:text-amber-500 transition-colors">Create</a>
+        <span class="text-gray-500">|</span>
         <a href="/about" class="hover:text-amber-500 transition-colors">About</a>
+        <span class="text-gray-500">|</span>
         <a href="/profile" class="hover:text-amber-500 transition-colors">Profile</a>
       </div>
 
       <!-- Right Side: Auth Links -->
       <div class="flex space-x-4">
         <a href="/login" class="hover:text-amber-500 transition-colors">Login</a>
+        <span class="text-gray-500">|</span>
         <a href="/register" class="hover:text-amber-500 transition-colors">Register</a>
+        <span class="text-gray-500">|</span>
         <a href="/logout" class="hover:text-amber-500 transition-colors">Logout</a>
       </div>
     </div>
@@ -35,10 +40,12 @@ const layoutTemplate = (bodyTemplate) => html`
   <!-- Footer -->
   <footer class="bg-gray-900 text-white text-center py-8">
     <div class="container mx-auto space-y-4">
-      <p class="text-lg">&copy; 2024 Sticker Creator. All rights reserved.</p>
+      <p class="text-lg">&copy; 2025 Sticker Creator. All rights reserved.</p>
       <div class="flex justify-center space-x-6">
         <a href="/about" class="hover:text-amber-500 transition-colors">About</a>
+        <span class="text-gray-500">|</span>
         <a href="/contact" class="hover:text-amber-500 transition-colors">Contact</a>
+        <span class="text-gray-500">|</span>
         <a href="/faq" class="hover:text-amber-500 transition-colors">FAQ</a>
       </div>
     </div>
