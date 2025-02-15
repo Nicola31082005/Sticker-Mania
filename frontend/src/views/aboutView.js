@@ -74,7 +74,7 @@ const template = () => html`
         href="/create"
         class="px-10 py-5 bg-amber-500 text-white font-semibold text-xl rounded-lg shadow-lg hover:bg-amber-600 transition-transform transform hover:scale-110 active:scale-95"
       >
-        Start Designing Now
+        Create Sticker Now
       </a>
     </div>
   </div>

@@ -19,8 +19,6 @@ const layoutTemplate = (bodyTemplate) => html`
         <a href="/create" class="hover:text-amber-500 transition-colors">Create</a>
         <span class="text-gray-500">|</span>
         <a href="/about" class="hover:text-amber-500 transition-colors">About</a>
-        <span class="text-gray-500">|</span>
-        <a href="/profile" class="hover:text-amber-500 transition-colors">Profile</a>
       </div>
 
       <!-- Right Side: Auth Links -->
