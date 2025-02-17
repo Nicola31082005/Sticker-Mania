@@ -39,7 +39,7 @@ export function cartView(ctx) {
     const cartItems = [
         {
         id: 1,
-        image: "/public/images/stickers/sticker1.png",
+        image: "/images/stickers/sticker1.png",
         size: "Medium",
         material: "Glossy",
         quantity: 2,
@@ -47,7 +47,7 @@ export function cartView(ctx) {
         },
         {
         id: 2,
-        image: "/public/images/stickers/sticker2.png",
+        image: "/images/stickers/sticker2.png",
         size: "Small",
         material: "Matte",
         quantity: 1,

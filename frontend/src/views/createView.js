@@ -4,7 +4,7 @@ import { animateImagePreview, setupMaterialSelection } from "../animations/gsapA
 const template = (picturePreview, handleAddToCart, increaseQtty, decreaseQtty) => html`
   <div class="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-6">
     <!-- Cool Heading -->
-    <div class="absolute top-30 text-center">
+    <div class="absolute top-35 text-center">
       <h1 class="text-5xl font-bold text-gray-800 mb-2 transform transition-all hover:scale-105">
         <span class="bg-gradient-to-r from-amber-500 to-blue-600 bg-clip-text text-transparent">Custom Sticker Studio</span>
       </h1>
