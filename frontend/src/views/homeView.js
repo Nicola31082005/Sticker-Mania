@@ -1,5 +1,5 @@
 import { html } from "lite-html";
-import { gsap } from "gsap";
+import { homeViewAnimation } from "../animations/gsapAnimations";
 
 const template = () => html`
   <div class="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -22,12 +22,13 @@ const template = () => html`
       </div>
 
       <!-- Stickers Display Section -->
-      <div id="stickerContainer" class="w-full md:w-1/2 relative h-[500px] md:h-[800px] lg:h-[800px] overflow-hidden">
+      <div id="stickerContainer" class="w-full md:w-1/2 relative h-[900px] md:h-[800px] lg:h-[800px] overflow-hidden">
         <!-- Floating Stickers -->
         <img src="/public/images/stickers/sticker1.png" class="absolute w-24 h-24 sticker" alt="Sticker 1" />
         <img src="/public/images/stickers/sticker2.png" class="absolute w-36 h-36 sticker" alt="Sticker 2" />
         <img src="/public/images/stickers/sticker3.png" class="absolute w-32 h-32 sticker" alt="Sticker 3" />
-        <img src="/public/images/stickers/sticker4.png" class="absolute w-32 h-32 sticker" alt="Sticker 3" />
+        <img src="/public/images/stickers/sticker4.png" class="absolute w-36 h-36 sticker" alt="Sticker 3" />
+        <img src="/public/images/stickers/sticker5.png" class="absolute w-42 h-36 sticker" alt="Sticker 3" />
       </div>
     </div>
   </div>
@@ -36,50 +37,7 @@ const template = () => html`
 function homeView(ctx) {
   const homeTemplate = template();
   ctx.render(homeTemplate);
-
-  setTimeout(() => {
-    const container = document.getElementById("stickerContainer");
-    const stickers = document.querySelectorAll(".sticker");
-
-    if (!container) return;
-
-    const containerWidth = container.clientWidth;
-    const containerHeight = container.clientHeight;
-    const occupiedPositions = [];
-
-    stickers.forEach((sticker) => {
-      const stickerWidth = sticker.clientWidth;
-      const stickerHeight = sticker.clientHeight;
-      let startX, startY, isOverlapping;
-
-      do {
-        startX = Math.random() * (containerWidth - stickerWidth); // Spread horizontally
-        startY = Math.random() * (containerHeight - stickerHeight); // Spread vertically
-        isOverlapping = occupiedPositions.some(
-          ([x, y]) => Math.abs(x - startX) < stickerWidth && Math.abs(y - startY) < stickerHeight
-        ); // Prevent overlapping
-      } while (isOverlapping);
-
-      occupiedPositions.push([startX, startY]);
-
-      const moveX = 30 + Math.random() * 50; // More spread out movement
-      const moveY = 30 + Math.random() * 50;
-      const duration = 3 + Math.random() * 2; // 3-5 sec
-      const rotation = Math.random() * 20 - 10; // Slight tilt (-10 to 10 degrees)
-
-      gsap.set(sticker, { x: startX, y: startY, rotation: rotation });
-
-      gsap.to(sticker, {
-        x: `+=${Math.random() > 0.5 ? moveX : -moveX}`,
-        y: `+=${Math.random() > 0.5 ? moveY : -moveY}`,
-        rotation: `+=${Math.random() * 20 - 10}`, // Add slight rotation during animation
-        duration: duration,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-    });
-  }, 100);
+  homeViewAnimation()
 }
 
 export default homeView;

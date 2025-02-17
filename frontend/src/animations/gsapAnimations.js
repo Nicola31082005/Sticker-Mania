@@ -18,3 +18,49 @@ export function setupMaterialSelection() {
         });
     });
 }
+
+export function homeViewAnimation() {
+    window.requestAnimationFrame(() => {
+        const container = document.getElementById("stickerContainer");
+        const stickers = document.querySelectorAll(".sticker");
+
+        if (!container) return;
+
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+        const occupiedPositions = [];
+
+        stickers.forEach((sticker) => {
+          const stickerWidth = sticker.clientWidth;
+          const stickerHeight = sticker.clientHeight;
+          let startX, startY, isOverlapping;
+
+          do {
+            startX = Math.random() * (containerWidth - stickerWidth); // Spread horizontally
+            startY = Math.random() * (containerHeight - stickerHeight); // Spread vertically
+            isOverlapping = occupiedPositions.some(
+              ([x, y]) => Math.abs(x - startX) < stickerWidth && Math.abs(y - startY) < stickerHeight
+            ); // Prevent overlapping
+          } while (isOverlapping);
+
+          occupiedPositions.push([startX, startY]);
+
+          const moveX = 30 + Math.random() * 50; // More spread out movement
+          const moveY = 30 + Math.random() * 50;
+          const duration = 3 + Math.random() * 2; // 3-5 sec
+          const rotation = Math.random() * 20 - 10; // Slight tilt (-10 to 10 degrees)
+
+          gsap.set(sticker, { x: startX, y: startY, rotation: rotation });
+
+          gsap.to(sticker, {
+            x: `+=${Math.random() > 0.5 ? moveX : -moveX}`,
+            y: `+=${Math.random() > 0.5 ? moveY : -moveY}`,
+            rotation: `+=${Math.random() * 20 - 10}`, // Add slight rotation during animation
+            duration: duration,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        });
+    });
+}
