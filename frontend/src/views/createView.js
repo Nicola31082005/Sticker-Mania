@@ -1,47 +1,51 @@
 import { html } from "lite-html";
+import { animateImagePreview, setupMaterialSelection } from "../animations/gsapAnimations";
 
-const template = (picturePreview) => html`
+const template = (picturePreview, handleAddToCart, increaseQtty, decreaseQtty) => html`
   <div class="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-6">
     <!-- Left Side: Sticker Preview -->
     <div class="w-full md:w-1/2 lg:w-2/5 flex flex-col items-center space-y-6">
-      <!-- Sticker Square -->
-      <div
-        id="sticker-preview"
-        class="w-96 h-96 bg-white border-4 border-dashed border-gray-300 rounded-lg flex justify-center items-center relative"
-      >
-        <!-- Crosshair (Displayed when no photo is uploaded) -->
-        <div id="crosshair" class="absolute inset-0 flex justify-center items-center">
-          <div class="w-full h-0.5 bg-gray-300"></div>
-          <div class="h-full w-0.5 bg-gray-300 absolute"></div>
+      <div class="relative group">
+        <div
+          id="sticker-preview"
+          class="w-96 h-96 bg-white rounded-lg shadow-2xl transform transition-all duration-300
+                 border-4 border-dashed border-gray-300 hover:border-amber-400 hover:shadow-3xl
+                 relative overflow-hidden">
+          <div id="crosshair" class="absolute inset-0 flex justify-center items-center">
+            <div class="absolute w-full h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
+            <div class="absolute h-full w-0.5 bg-gradient-to-b from-transparent via-amber-400 to-transparent"></div>
+          </div>
+          <img
+            id="uploaded-photo"
+            src=""
+            alt="Uploaded Photo"
+            class="w-full h-full object-cover rounded-lg opacity-0 transform scale-95"
+          />
         </div>
-
-        <!-- Uploaded Photo (Hidden by default) -->
-        <img
-          id="uploaded-photo"
-          src=""
-          alt="Uploaded Photo"
-          class="w-full h-full object-cover rounded-lg hidden"
-        />
       </div>
-
-      <!-- Add to Cart Button -->
       <button
         id="add-to-cart"
-        class="px-10 py-5 bg-amber-500 text-white font-semibold text-xl rounded-lg shadow-lg hover:bg-amber-600 transition-transform transform hover:scale-105 active:scale-95"
+        class="px-10 py-5 bg-amber-500 text-white font-semibold text-xl rounded-lg shadow-lg
+               hover:bg-amber-600 transform transition-all hover:scale-105 active:scale-95
+               relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
         disabled
+        @click=${handleAddToCart}
       >
-        Add to Cart
+        <span class="relative z-10">Add to Cart ($<span id="price-display">0.00</span>)</span>
+        <div class="absolute inset-0 bg-amber-600 opacity-0 transition-opacity hover:opacity-20"></div>
       </button>
     </div>
 
-    <!-- Right Side: Import Photo Button -->
-    <div class="w-full md:w-1/2 lg:w-2/5 flex flex-col items-center space-y-6 mt-10 md:mt-0">
-      <!-- Import Photo Button -->
+    <!-- Right Side: Customization Tools -->
+    <div class="w-full md:w-1/2 lg:w-2/5 flex flex-col items-center space-y-6 mt-10 md:mt-0 md:ml-10">
       <label
         for="photo-upload"
-        class="px-10 py-5 bg-blue-500 text-white font-semibold text-xl rounded-lg shadow-lg hover:bg-blue-600 transition-transform transform hover:scale-105 active:scale-95 cursor-pointer"
+        class="px-10 py-5 bg-blue-500 text-white font-semibold text-xl rounded-lg shadow-lg
+               hover:bg-blue-600 transform transition-all hover:scale-105 active:scale-95
+               cursor-pointer relative overflow-hidden"
       >
-        Import Photo
+        <span class="relative z-10">✨ Import Photo</span>
+        <div class="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition-opacity"></div>
       </label>
       <input
         type="file"
@@ -50,35 +54,100 @@ const template = (picturePreview) => html`
         @change=${picturePreview}
         class="hidden"
       />
+
+      <div class="w-full bg-white p-6 rounded-xl shadow-lg transform transition-all hover:shadow-xl">
+        <div class="space-y-4">
+          <div class="custom-control">
+            <label class="text-gray-700">Size</label>
+            <select id="size-select" class="custom-select">
+              <option value="small">Small (3"x3")</option>
+              <option value="medium">Medium (5"x5")</option>
+              <option value="large">Large (8"x8")</option>
+            </select>
+          </div>
+
+          <div class="custom-control">
+            <label class="text-gray-700">Material</label>
+            <div class="grid grid-cols-3 gap-4">
+              <button class="material-option" data-material="glossy">Glossy</button>
+              <button class="material-option" data-material="matte">Matte</button>
+              <button class="material-option" data-material="waterproof">Waterproof</button>
+            </div>
+          </div>
+
+          <div class="custom-control">
+            <label class="text-gray-700">Quantity</label>
+            <div class="flex items-center space-x-2">
+              <button id="decrease-qty" class="quantity-btn" @click=${decreaseQtty}>-</button>
+              <input id="quantity-input" type="number" value="1" min="1" class="quantity-input" />
+              <button id="increase-qty" class="quantity-btn" @click=${increaseQtty}>+</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 `;
 
 function createView(ctx) {
+  const picturePreview = (event) => {
+    const uploadedPhoto = document.getElementById("uploaded-photo");
+    const crosshair = document.getElementById("crosshair");
+    const addToCartButton = document.getElementById("add-to-cart");
+    const file = event.target.files[0];
 
-    const picturePreview = (event) => {
-        // Add event listeners after rendering
-        const uploadedPhoto = document.getElementById("uploaded-photo");
-        const crosshair = document.getElementById("crosshair");
-        const addToCartButton = document.getElementById("add-to-cart");
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            uploadedPhoto.src = e.target.result;
-            uploadedPhoto.classList.remove("hidden");
-            crosshair.classList.add("hidden");
-            addToCartButton.disabled = false;
-          };
-          reader.readAsDataURL(file);
-        }
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        uploadedPhoto.src = e.target.result;
+        animateImagePreview(uploadedPhoto, crosshair, addToCartButton);
+      };
+      reader.readAsDataURL(file);
     }
+  };
+
+  const createTemplate = template(picturePreview, handleAddToCart, increaseQtty, decreaseQtty);
+  ctx.render(createTemplate);
+
+  setupMaterialSelection();
 
 
-    const createTemplate = template(picturePreview);
-    ctx.render(createTemplate);
+  // Quantity button functionality
+  function increaseQtty() {
+    const input = document.getElementById("quantity-input");
+    input.value = Number(input.value) + 1;
+  }
+  function decreaseQtty() {
+    const input = document.getElementById("quantity-input");
+    if (input.value > 1) input.value = Number(input.value) - 1;
+  }
 
 
+}
+
+const handleAddToCart = async () => {
+  const uploadedPhoto = document.getElementById("uploaded-photo");
+  const size = document.getElementById("size-select").value;
+  const quantity = document.getElementById("quantity-input").value;
+  const materialBtn = document.querySelector(".material-option.active");
+  const material = materialBtn ? materialBtn.dataset.material : null;
+
+  if (!uploadedPhoto.src || !size || !material || quantity <= 0) {
+    alert("Please complete all customizations before adding to cart.");
+    return;
+  }
+
+  // Convert image to Base64
+  const imageData = uploadedPhoto.src;
+
+  const orderData = {
+    image: imageData,
+    size,
+    material,
+    quantity: Number(quantity),
+  };
+
+  console.log(orderData);
 }
 
 export default createView;
