@@ -41,3 +41,10 @@
 .quantity-input {
     @apply w-16 text-center border border-gray-300 rounded-lg focus:border-amber-400;
 }
+
+#logo {
+    max-height: 4rem;
+    /* Set the logo to have a max height */
+    object-fit: contain;
+    /* Ensures the image scales proportionally */
+}

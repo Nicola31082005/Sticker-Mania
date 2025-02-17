@@ -7,9 +7,9 @@ const layoutTemplate = (bodyTemplate) => html`
   <nav class="bg-gray-900 text-white p-4 sticky top-0 z-50 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
       <!-- Left Side: Logo -->
+
       <a href="/" class="text-xl font-bold flex items-center space-x-2 hover:text-amber-500 transition-colors">
-        <img src="/public/images/logo.png" alt="Logo" class="w-8 h-8" />
-        <span>Sticker Creator</span>
+        <img id="logo" src="/images/logo/logo-transparent.png" alt="Logo" class="" />
       </a>
 
       <!-- Center Navigation -->
