@@ -24,11 +24,11 @@ const template = () => html`
       <!-- Stickers Display Section -->
       <div id="stickerContainer" class="w-full md:w-1/2 relative h-[900px] md:h-[800px] lg:h-[800px] overflow-hidden">
         <!-- Floating Stickers -->
-        <img src="/public/images/stickers/sticker1.png" class="absolute w-24 h-24 sticker" alt="Sticker 1" />
-        <img src="/public/images/stickers/sticker2.png" class="absolute w-36 h-36 sticker" alt="Sticker 2" />
-        <img src="/public/images/stickers/sticker3.png" class="absolute w-32 h-32 sticker" alt="Sticker 3" />
-        <img src="/public/images/stickers/sticker4.png" class="absolute w-36 h-36 sticker" alt="Sticker 3" />
-        <img src="/public/images/stickers/sticker5.png" class="absolute w-42 h-36 sticker" alt="Sticker 3" />
+        <img src="/images/stickers/sticker1.png" class="absolute w-24 h-24 sticker" alt="Sticker 1" />
+        <img src="/images/stickers/sticker2.png" class="absolute w-36 h-36 sticker" alt="Sticker 2" />
+        <img src="/images/stickers/sticker3.png" class="absolute w-32 h-32 sticker" alt="Sticker 3" />
+        <img src="/images/stickers/sticker4.png" class="absolute w-36 h-36 sticker" alt="Sticker 3" />
+        <img src="/images/stickers/sticker5.png" class="absolute w-42 h-36 sticker" alt="Sticker 3" />
       </div>
     </div>
   </div>

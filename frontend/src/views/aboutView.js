@@ -33,7 +33,7 @@ const template = () => html`
         <!-- Team Member 1 -->
         <div class="text-center">
           <img
-            src="/public/images/team/team1.jpg"
+            src="/images/team/team1.jpg"
             alt="Team Member 1"
             class="w-32 h-32 rounded-full object-cover mx-auto mb-4"
             loading="lazy"
@@ -45,7 +45,7 @@ const template = () => html`
         <!-- Team Member 2 -->
         <div class="text-center">
           <img
-            src="/public/images/team/team2.jpg"
+            src="/images/team/team2.jpg"
             alt="Team Member 2"
             class="w-32 h-32 rounded-full object-cover mx-auto mb-4"
             loading="lazy"
@@ -57,7 +57,7 @@ const template = () => html`
         <!-- Team Member 3 -->
         <div class="text-center">
           <img
-            src="/public/images/team/team3.jpg"
+            src="/images/team/team3.jpg"
             alt="Team Member 3"
             class="w-32 h-32 rounded-full object-cover mx-auto mb-4"
             loading="lazy"
