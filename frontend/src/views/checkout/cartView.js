@@ -1,5 +1,6 @@
 import { html } from "lite-html";
 import cartService from "../../services/cartService";
+import page from "page";
 
   const template = (cartItems, totalPrice) => html`
     <div class="container mx-auto p-6">
@@ -18,7 +19,7 @@ import cartService from "../../services/cartService";
                 <p class="text-gray-600">Price: $${item.price.toFixed(2)} each</p>
               </div>
               <!-- Remove Button -->
-              <button class="text-red-500 hover:text-red-700">Remove</button>
+              <button @click=${() => removeFromCart(item._id)} class="text-red-500 hover:text-red-700">Remove</button>
             </div>
           `
         )}
@@ -37,15 +38,8 @@ import cartService from "../../services/cartService";
 
 export function cartView(ctx) {
 
-
-  // Example cart data (replace with actual data from your state or backend)
-
-
-
-  // Get the cart items through te service.
+  // Get the cart items through te service
   const cartItems = cartService.getAll()
-  // Get the cart items total price.
-  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   // Get the cart items total price
   const totalPrice = cartService.getCartTotalPrice()
 
@@ -53,5 +47,11 @@ export function cartView(ctx) {
   // Render the cart template
   const cartTemplate = template(cartItems, totalPrice)
   ctx.render(cartTemplate);
-
 }
+
+function removeFromCart(id) {
+  // Remove item from the cart
+  cartService.removeItem(id)
+  page.redirect("/cart")
+}
+
