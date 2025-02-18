@@ -5,34 +5,25 @@ const main = document.querySelector("#root");
 const layoutTemplate = (bodyTemplate) => html`
   <!-- Navbar -->
   <nav class="bg-gray-900 text-white p-4 sticky top-0 z-50 shadow-lg">
-    <div class="container mx-auto flex justify-between items-center">
-      <!-- Left Side: Logo -->
+  <div class="container mx-auto flex items-center justify-between">
 
-      <a href="/" class="text-xl font-bold flex items-center space-x-2 hover:text-amber-500 transition-colors">
-        <img id="logo" src="/images/logo/logo-transparent.png" alt="Logo" class="" />
-      </a>
+    <!-- Left Side: Logo -->
+    <a href="/" class="text-xl font-bold flex items-center space-x-2 hover:text-amber-500 transition-colors">
+      <img id="logo" src="/images/logo/logo-transparent.png" alt="Logo" class="" />
+    </a>
 
-      <!-- Center Navigation -->
-      <div class="flex space-x-6 items-center">
-        <a href="/" class="hover:text-amber-500 transition-colors">Home</a>
-        <span class="text-gray-500">|</span>
-        <a href="/create" class="hover:text-amber-500 transition-colors">Create</a>
-        <span class="text-gray-500">|</span>
-        <a href="/about" class="hover:text-amber-500 transition-colors">About</a>
-        <span class="text-gray-500">|</span>
-        <a href="/cart" class="hover:text-amber-500 transition-colors">Cart</a> <!-- Add Cart Link -->
-      </div>
-
-      <!-- Right Side: Auth Links -->
-      <div class="flex space-x-4">
-        <a href="/login" class="hover:text-amber-500 transition-colors">Login</a>
-        <span class="text-gray-500">|</span>
-        <a href="/register" class="hover:text-amber-500 transition-colors">Register</a>
-        <span class="text-gray-500">|</span>
-        <a href="/logout" class="hover:text-amber-500 transition-colors">Logout</a>
-      </div>
+    <!-- Center Navigation -->
+    <div class="flex justify-center gap-4 items-center">
+      <a href="/" class="hover:text-amber-500 transition-colors">Home</a>
+      <span class="text-gray-500">|</span>
+      <a href="/create" class="hover:text-amber-500 transition-colors">Create</a>
+      <span class="text-gray-500">|</span>
+      <a href="/about" class="hover:text-amber-500 transition-colors">About</a>
+      <span class="text-gray-500">|</span>
+      <a href="/cart" class="hover:text-amber-500 transition-colors">Cart</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- Main Content -->
   <main class="flex-grow bg-gradient-to-b from-gray-50 to-gray-100">${bodyTemplate}</main>
