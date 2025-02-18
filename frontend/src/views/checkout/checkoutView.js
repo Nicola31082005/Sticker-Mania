@@ -63,7 +63,6 @@ const template = (cartItems, totalPrice) => html`
 `;
 
 export function checkoutView(ctx) {
-  // Example cart data (replace with actual data from your state or backend)
 
   // Get the cart items through the service.
   const cartItems = cartService.getAll()
@@ -73,3 +72,8 @@ export function checkoutView(ctx) {
   const checkoutTemplate = template(cartItems, totalPrice);
   ctx.render(checkoutTemplate);
 }
+
+
+// Get the cart details and the shipping information
+// Connect with the backend and send the data
+// Redirect to 'thank you' page

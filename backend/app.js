@@ -1,7 +1,14 @@
 import express from "express";
 import routes from "./routes.js";
+import "dotenv/config";
+import db from "./config/db.js";
 
 const app = express();
+
+// Connect with db
+await db();
+
+
 
 app.use(routes)
 

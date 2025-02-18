@@ -145,8 +145,13 @@ const handleAddToCart = async () => {
   const material = materialBtn ? materialBtn.dataset.material : null;
   const pricePerSticker = 2;
 
-  if (!uploadedPhoto.src || !size || !material || quantity <= 0) {
+  if (!uploadedPhoto.src || !size || !material) {
     alert("Please complete all customizations before adding to cart.");
+    return;
+  }
+
+  if (quantity < 5) {
+    alert("Please add minimum 5 stickers.")
     return;
   }
 
