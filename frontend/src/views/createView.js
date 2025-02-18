@@ -90,7 +90,7 @@ const template = (picturePreview, handleAddToCart, increaseQtty, decreaseQtty) =
             <label class="text-gray-700">Quantity</label>
             <div class="flex items-center space-x-2">
               <button id="decrease-qty" class="quantity-btn" @click=${decreaseQtty}>-</button>
-              <input id="quantity-input" type="number" value="1" min="1" class="quantity-input" />
+              <input id="quantity-input" type="number" value="5" min="5" class="quantity-input" />
               <button id="increase-qty" class="quantity-btn" @click=${increaseQtty}>+</button>
             </div>
           </div>
@@ -122,14 +122,18 @@ function createView(ctx) {
 
   setupMaterialSelection();
 
+  updatePriceDisplay()
+
   // Quantity button functionality
   function increaseQtty() {
     const input = document.getElementById("quantity-input");
     input.value = Number(input.value) + 1;
+    updatePriceDisplay()
   }
   function decreaseQtty() {
     const input = document.getElementById("quantity-input");
-    if (input.value > 1) input.value = Number(input.value) - 1;
+    if (input.value > 5) input.value = Number(input.value) - 1;
+    updatePriceDisplay()
   }
 }
 
@@ -139,6 +143,7 @@ const handleAddToCart = async () => {
   const quantity = document.getElementById("quantity-input").value;
   const materialBtn = document.querySelector(".material-option.active");
   const material = materialBtn ? materialBtn.dataset.material : null;
+  const pricePerSticker = 2;
 
   if (!uploadedPhoto.src || !size || !material || quantity <= 0) {
     alert("Please complete all customizations before adding to cart.");
@@ -154,7 +159,7 @@ const handleAddToCart = async () => {
     size,
     material,
     quantity: Number(quantity),
-    price : 5
+    price : pricePerSticker * Number(quantity),
   };
 
   // Push orderData to the cart items
@@ -162,6 +167,21 @@ const handleAddToCart = async () => {
 
   page.redirect("/cart")
 
+}
+
+
+function updatePriceDisplay() {
+  const quantityInput = document.getElementById("quantity-input");
+  const priceDisplay = document.getElementById("price-display");
+
+  // Price per sticker
+  const pricePerSticker = 2;
+
+  // Calculate total price
+  const totalPrice = pricePerSticker * Number(quantityInput.value);
+
+  // Update the price display
+  priceDisplay.textContent = totalPrice.toFixed(2);
 }
 
 export default createView;

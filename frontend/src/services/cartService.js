@@ -20,7 +20,7 @@ export default {
     },
     getCartTotalPrice() {
         const cartItems = this.getAll();
-        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+        return cartItems.reduce((total, item) => total + item.price, 0);
     }
 
 

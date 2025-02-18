@@ -16,7 +16,7 @@ import page from "page";
                 <p class="text-lg font-semibold">Custom Sticker</p>
                 <p class="text-gray-600">Size: ${item.size} | Material: ${item.material}</p>
                 <p class="text-gray-600">Quantity: ${item.quantity}</p>
-                <p class="text-gray-600">Price: $${item.price.toFixed(2)} each</p>
+                <p class="text-gray-600">Price: $${item.price.toFixed(2)}</p>
               </div>
               <!-- Remove Button -->
               <button @click=${() => removeFromCart(item._id)} class="text-red-500 hover:text-red-700">Remove</button>

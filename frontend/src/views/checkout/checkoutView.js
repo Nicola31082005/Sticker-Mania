@@ -15,7 +15,7 @@ const template = (cartItems, totalPrice) => html`
               <p class="text-lg font-semibold">Custom Sticker</p>
               <p class="text-gray-600">Size: ${item.size} | Material: ${item.material}</p>
               <p class="text-gray-600">Quantity: ${item.quantity}</p>
-              <p class="text-gray-600">Price: $${item.price.toFixed(2)} each</p>
+              <p class="text-gray-600">Price: $${item.price.toFixed(2)}</p>
             </div>
           </div>
         `
