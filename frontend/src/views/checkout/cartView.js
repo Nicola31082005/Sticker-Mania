@@ -46,6 +46,8 @@ export function cartView(ctx) {
   const cartItems = cartService.getAll()
   // Get the cart items total price.
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  // Get the cart items total price
+  const totalPrice = cartService.getCartTotalPrice()
 
 
   // Render the cart template

@@ -68,8 +68,7 @@ export function checkoutView(ctx) {
   // Get the cart items through the service.
   const cartItems = cartService.getAll()
   // Get the cart total price through the service.
-  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
+  const totalPrice = cartService.getCartTotalPrice()
   // Render the checkout template
   const checkoutTemplate = template(cartItems, totalPrice);
   ctx.render(checkoutTemplate);
