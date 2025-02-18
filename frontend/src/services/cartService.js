@@ -21,6 +21,9 @@ export default {
     getCartTotalPrice() {
         const cartItems = this.getAll();
         return cartItems.reduce((total, item) => total + item.price, 0);
+    },
+    clearCart() {
+        localStorage.clear()
     }
 
 

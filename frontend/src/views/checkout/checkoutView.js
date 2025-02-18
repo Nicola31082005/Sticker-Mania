@@ -1,7 +1,7 @@
 import { html } from "lite-html";
 import cartService from "../../services/cartService";
 
-const template = (cartItems, totalPrice) => html`
+const template = (cartItems, totalPrice, handleOrderSubmit) => html`
   <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6">Checkout</h1>
     <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -28,7 +28,7 @@ const template = (cartItems, totalPrice) => html`
 
       <!-- Shipping Details Form -->
       <h2 class="text-xl font-semibold mt-8 mb-4">Shipping Information</h2>
-      <form action="/submit-order" method="POST">
+      <form @submit=${handleOrderSubmit} method="POST">
           <div class="mb-4">
             <label for="name" class="block text-gray-700">Email</label>
             <input type="text" id="name" name="email" class="w-full p-3 border border-gray-300 rounded-md" required />
@@ -69,11 +69,45 @@ export function checkoutView(ctx) {
   // Get the cart total price through the service.
   const totalPrice = cartService.getCartTotalPrice()
   // Render the checkout template
-  const checkoutTemplate = template(cartItems, totalPrice);
+  const checkoutTemplate = template(cartItems, totalPrice, handleOrderSubmit);
   ctx.render(checkoutTemplate);
 }
 
 
-// Get the cart details and the shipping information
-// Connect with the backend and send the data
-// Redirect to 'thank you' page
+async function handleOrderSubmit(e) {
+  e.preventDefault();
+
+  const formData = new FormData(e.currentTarget);
+  const data = Object.fromEntries(formData.entries())
+
+  const cartItems = cartService.getAll()
+  const totalPrice = cartService.getCartTotalPrice()
+
+  const orderData = { cartItems, ...data, totalPrice }
+
+  console.log(orderData);
+
+  try {
+
+    const response = await fetch("http://localhost:5000/submit-order", {
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json",
+      },
+      body: JSON.stringify(orderData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to submit order");
+    }
+
+    cartService.clearCart();
+
+
+  } catch (error) {
+     console.error(error);
+  }
+
+
+}
+
