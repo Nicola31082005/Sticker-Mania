@@ -1,4 +1,5 @@
 import { html } from "lite-html";
+import cartService from "../../services/cartService";
 
 const template = (cartItems, totalPrice) => html`
   <div class="container mx-auto p-6">
@@ -63,24 +64,10 @@ const template = (cartItems, totalPrice) => html`
 
 export function checkoutView(ctx) {
   // Example cart data (replace with actual data from your state or backend)
-  const cartItems = [
-    {
-      id: 1,
-      image: "/public/images/stickers/sticker1.png",
-      size: "Medium",
-      material: "Glossy",
-      quantity: 2,
-      price: 5.0,
-    },
-    {
-      id: 2,
-      image: "/public/images/stickers/sticker2.png",
-      size: "Small",
-      material: "Matte",
-      quantity: 1,
-      price: 3.0,
-    },
-  ];
+
+  // Get the cart items through the service.
+  const cartItems = cartService.getAll()
+  // Get the cart total price through the service.
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   // Render the checkout template

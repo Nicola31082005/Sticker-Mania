@@ -1,5 +1,7 @@
 import { html } from "lite-html";
 import { animateImagePreview, setupMaterialSelection } from "../animations/gsapAnimations";
+import { v4 as uuidv4 } from "uuid";
+import cartService from "../services/cartService";
 
 const template = (picturePreview, handleAddToCart, increaseQtty, decreaseQtty) => html`
   <div class="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-6">
@@ -146,13 +148,17 @@ const handleAddToCart = async () => {
   const imageData = uploadedPhoto.src;
 
   const orderData = {
+    _id: uuidv4(),
     image: imageData,
     size,
     material,
     quantity: Number(quantity),
+    price : 5
   };
 
-  console.log(orderData);
+  // Push orderData to the cart items
+  cartService.addItem(orderData);
+
 }
 
 export default createView;
