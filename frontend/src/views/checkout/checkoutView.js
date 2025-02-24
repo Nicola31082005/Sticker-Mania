@@ -1,5 +1,6 @@
 import { html } from "lite-html";
 import cartService from "../../services/cartService";
+import { convertBase64ToFile, storageImage } from "../../services/storageService";
 
 const template = (cartItems, totalPrice, handleOrderSubmit) => html`
   <div class="container mx-auto p-6">
@@ -10,7 +11,7 @@ const template = (cartItems, totalPrice, handleOrderSubmit) => html`
       ${cartItems.map(
         (item) => html`
           <div class="flex items-center border-b border-gray-200 py-4">
-            <img src=${item.image} alt="Sticker" class="w-16 h-16 object-cover rounded-lg" />
+            <img src=${item.previewUrl} alt="Sticker" class="w-16 h-16 object-cover rounded-lg" />
             <div class="ml-4 flex-grow">
               <p class="text-lg font-semibold">Custom Sticker</p>
               <p class="text-gray-600">Size: ${item.size} | Material: ${item.material}</p>
@@ -77,37 +78,54 @@ export function checkoutView(ctx) {
 async function handleOrderSubmit(e) {
   e.preventDefault();
 
+  // Extract form data
   const formData = new FormData(e.currentTarget);
   const data = Object.fromEntries(formData.entries())
 
+  // Get cart items and total price
   const cartItems = cartService.getAll()
   const totalPrice = cartService.getCartTotalPrice()
 
-  const orderData = { cartItems, ...data, totalPrice }
-
-  console.log(orderData);
-
   try {
+  // Convert Base64 preview URLs to Image Files
+  const imageFiles = await Promise.all(
+    cartItems.map(cartItem => convertBase64ToFile(cartItem.previewUrl))
+  );
+  // Upload images files to storage and get URLs
+  const imageUrls = await Promise.all(
+    imageFiles.map(file => storageImage(file))
+  );
+  // Update cart items with image URLs
+  const updatedCartItems = cartItems.map((item, index) => ({
+    ...item,
+    previewUrl: imageUrls[index],
+  }));
+  // Prepare order data
+  const orderData = {
+    updatedCartItems,
+    ...data,
+    totalPrice,
+  };
 
-    const response = await fetch("http://localhost:5000/submit-order", {
-      method: "POST",
-      headers: {
-        "Content-Type" : "application/json",
-      },
-      body: JSON.stringify(orderData),
-    });
+  // Submit order to the server
+  const response = await fetch("http://localhost:5000/submit-order", {
+    method: "POST",
+    headers: {
+      "Content-Type" : "application/json",
+    },
+    body: JSON.stringify(orderData),
+  });
 
-    if (!response.ok) {
-      throw new Error("Failed to submit order");
-    }
-
-    cartService.clearCart();
-
-
-  } catch (error) {
-     console.error(error);
+  if (!response.ok) {
+    throw new Error("Failed to submit order");
   }
 
+  // Clear the cart after successful submission
+  cartService.clearCart();
+
+  } catch (error) {
+    console.error("Error submiting the order:", error);
+  }
 
 }
 

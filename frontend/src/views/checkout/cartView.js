@@ -10,7 +10,7 @@ import page from "page";
           (item) => html`
             <div class="flex items-center border-b border-gray-200 py-4">
               <!-- Sticker Image -->
-              <img src=${item.image} alt="Sticker" class="w-16 h-16 object-cover rounded-lg" />
+              <img src=${item.previewUrl} alt="Sticker" class="w-16 h-16 object-cover rounded-lg" />
               <!-- Sticker Details -->
               <div class="ml-4 flex-grow">
                 <p class="text-lg font-semibold">Custom Sticker</p>
@@ -42,6 +42,7 @@ export function cartView(ctx) {
   const cartItems = cartService.getAll()
   // Get the cart items total price
   const totalPrice = cartService.getCartTotalPrice()
+
 
 
   // Render the cart template

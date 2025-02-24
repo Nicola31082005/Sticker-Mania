@@ -2,9 +2,7 @@ import { html } from "lite-html";
 import { animateImagePreview, setupMaterialSelection } from "../animations/gsapAnimations";
 import { v4 as uuidv4 } from "uuid";
 import cartService from "../services/cartService";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import page from "page";
-import { storage } from "../config/firebase";
 
 const template = (picturePreview, handleAddToCart, increaseQtty, decreaseQtty) => html`
   <div class="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-6">
@@ -157,19 +155,10 @@ const handleAddToCart = async () => {
     return;
   }
 
-    // Convert image to a file (if it's a Base64 string)
-    const file = await fetch(uploadedPhoto.src)
-    .then((res) => res.blob())
-    .then((blob) => new File([blob], `sticker-${uuidv4()}.png`, { type: "image/png" }));
-
-    // Upload the image to Firebase Storage
-    const storageRef = ref(storage, `stickers/${file.name}`);
-    await uploadBytes(storageRef, file);
-    const imageUrl = await getDownloadURL(storageRef);
 
   const orderData = {
     _id: uuidv4(),
-    image: imageUrl,
+    previewUrl: uploadedPhoto.src,
     size,
     material,
     quantity: Number(quantity),
