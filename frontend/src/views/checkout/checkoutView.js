@@ -110,7 +110,7 @@ export function checkoutView(ctx) {
     await submitOrder(orderData)
 
     // Redirect to a thank you page
-    page('/')
+    page('/thank-you')
 
     // Clear the cart after successful submission
     cartService.clearCart();

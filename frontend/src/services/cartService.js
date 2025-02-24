@@ -23,7 +23,7 @@ export default {
         return cartItems.reduce((total, item) => total + item.price, 0);
     },
     clearCart() {
-        localStorage.clear()
+        localStorage.removeItem(CART_KEY)
     }
 
 
