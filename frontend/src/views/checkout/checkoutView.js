@@ -116,15 +116,18 @@ async function handleOrderSubmit(e) {
     body: JSON.stringify(orderData),
   });
 
+  // Handle response
+  const result = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to submit order");
+    throw new Error(await result.message);
   }
 
   // Clear the cart after successful submission
   cartService.clearCart();
 
   } catch (error) {
-    console.error("Error submiting the order:", error);
+    console.error("Error submiting the order:", error.message);
   }
 
 }

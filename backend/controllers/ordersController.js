@@ -1,5 +1,6 @@
 import { Router } from "express";
 import ordersService from "../services/ordersService.js";
+import getErrorMessage from "../utils/getError.js";
 
 const ordersController = Router();
 
@@ -7,12 +8,18 @@ ordersController.post("/submit-order", async (req, res) => {
     const ordersData = req.body;
 
     try {
-        await ordersService.createOrder(ordersData);
-        res.end()
+        const newOrder = await ordersService.createOrder(ordersData);
+        res
+        .status(201)
+        .json({ message: 'Order created successfully!', order: newOrder });
     } catch (error) {
-        console.error(error.message)
-    }
+        const err = getErrorMessage(error);
+        console.log();
 
+        return res
+        .status(400)
+        .json({ message: err })
+    }
 })
 
 
