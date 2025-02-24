@@ -1,6 +1,8 @@
 import { html } from "lite-html";
 import cartService from "../../services/cartService";
 import { convertBase64ToFile, storageImage } from "../../services/storageService";
+import { submitOrder } from "../../services/ordersApi";
+import page from "page"
 
 const template = (cartItems, totalPrice, handleOrderSubmit) => html`
   <div class="container mx-auto p-6">
@@ -72,63 +74,54 @@ export function checkoutView(ctx) {
   // Render the checkout template
   const checkoutTemplate = template(cartItems, totalPrice, handleOrderSubmit);
   ctx.render(checkoutTemplate);
-}
 
+  async function handleOrderSubmit(e) {
+    e.preventDefault();
 
-async function handleOrderSubmit(e) {
-  e.preventDefault();
+    // Extract form data
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries())
 
-  // Extract form data
-  const formData = new FormData(e.currentTarget);
-  const data = Object.fromEntries(formData.entries())
+    // Get cart items and total price
+    const cartItems = cartService.getAll()
+    const totalPrice = cartService.getCartTotalPrice()
 
-  // Get cart items and total price
-  const cartItems = cartService.getAll()
-  const totalPrice = cartService.getCartTotalPrice()
+    try {
+    // Convert Base64 preview URLs to Image Files
+    const imageFiles = await Promise.all(
+      cartItems.map(cartItem => convertBase64ToFile(cartItem.previewUrl))
+    );
+    // Upload images files to storage and get URLs
+    const imageUrls = await Promise.all(
+      imageFiles.map(file => storageImage(file))
+    );
+    // Update cart items with image URLs
+    const updatedCartItems = cartItems.map((item, index) => ({
+      ...item,
+      previewUrl: imageUrls[index],
+    }));
+    // Prepare order data
+    const orderData = {
+      updatedCartItems,
+      ...data,
+      totalPrice,
+    };
+    // Submit order to the backend
+    await submitOrder(orderData)
 
-  try {
-  // Convert Base64 preview URLs to Image Files
-  const imageFiles = await Promise.all(
-    cartItems.map(cartItem => convertBase64ToFile(cartItem.previewUrl))
-  );
-  // Upload images files to storage and get URLs
-  const imageUrls = await Promise.all(
-    imageFiles.map(file => storageImage(file))
-  );
-  // Update cart items with image URLs
-  const updatedCartItems = cartItems.map((item, index) => ({
-    ...item,
-    previewUrl: imageUrls[index],
-  }));
-  // Prepare order data
-  const orderData = {
-    updatedCartItems,
-    ...data,
-    totalPrice,
-  };
+    // Redirect to a thank you page
+    page('/')
 
-  // Submit order to the server
-  const response = await fetch("http://localhost:5000/submit-order", {
-    method: "POST",
-    headers: {
-      "Content-Type" : "application/json",
-    },
-    body: JSON.stringify(orderData),
-  });
+    // Clear the cart after successful submission
+    cartService.clearCart();
 
-  // Handle response
-  const result = await response.json();
-
-  if (!response.ok) {
-    throw new Error(await result.message);
-  }
-
-  // Clear the cart after successful submission
-  cartService.clearCart();
-
-  } catch (error) {
-    console.error("Error submiting the order:", error.message);
+    } catch (error) {
+      ctx.render(checkoutTemplate, error.message)
+    }
   }
 
 }
+
+
+
 

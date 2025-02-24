@@ -43,8 +43,6 @@ export function cartView(ctx) {
   // Get the cart items total price
   const totalPrice = cartService.getCartTotalPrice()
 
-
-
   // Render the cart template
   const cartTemplate = template(cartItems, totalPrice)
   ctx.render(cartTemplate);

@@ -14,8 +14,6 @@ ordersController.post("/submit-order", async (req, res) => {
         .json({ message: 'Order created successfully!', order: newOrder });
     } catch (error) {
         const err = getErrorMessage(error);
-        console.log();
-
         return res
         .status(400)
         .json({ message: err })
