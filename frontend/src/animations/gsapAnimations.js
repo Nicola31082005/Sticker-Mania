@@ -20,47 +20,86 @@ export function setupMaterialSelection() {
 }
 
 export function homeViewAnimation() {
-    window.requestAnimationFrame(() => {
-        const container = document.getElementById("stickerContainer");
-        const stickers = document.querySelectorAll(".sticker");
+  window.requestAnimationFrame(() => {
+    const rightContainer = document.getElementById("stickerContainer");
+    const leftContainer = document.getElementById("leftStickerContainer");
+    const rightStickers = document.querySelectorAll(".sticker");
+    const leftStickers = document.querySelectorAll(".left-sticker");
 
-        if (!container) return;
+    // Animate right-side stickers
+    if (rightContainer && rightStickers.length > 0) {
+      const containerWidth = rightContainer.clientWidth;
+      const containerHeight = rightContainer.clientHeight;
 
-        const containerWidth = container.clientWidth;
-        const containerHeight = container.clientHeight;
-        const occupiedPositions = [];
+      if (containerWidth > 0 && containerHeight > 0) {
+        const occupiedPositions = new Set();
 
-        stickers.forEach((sticker) => {
-          const stickerWidth = sticker.clientWidth;
-          const stickerHeight = sticker.clientHeight;
+        rightStickers.forEach((sticker) => {
+          const stickerWidth = sticker.clientWidth || 50;
+          const stickerHeight = sticker.clientHeight || 50;
+
           let startX, startY, isOverlapping;
-
           do {
-            startX = Math.random() * (containerWidth - stickerWidth); // Spread horizontally
-            startY = Math.random() * (containerHeight - stickerHeight); // Spread vertically
-            isOverlapping = occupiedPositions.some(
+            startX = Math.random() * (containerWidth - stickerWidth);
+            startY = Math.random() * (containerHeight - stickerHeight);
+            isOverlapping = [...occupiedPositions].some(
               ([x, y]) => Math.abs(x - startX) < stickerWidth && Math.abs(y - startY) < stickerHeight
-            ); // Prevent overlapping
+            );
           } while (isOverlapping);
 
-          occupiedPositions.push([startX, startY]);
+          occupiedPositions.add([startX, startY]);
 
-          const moveX = 30 + Math.random() * 50; // More spread out movement
-          const moveY = 30 + Math.random() * 50;
-          const duration = 3 + Math.random() * 2; // 3-5 sec
-          const rotation = Math.random() * 20 - 10; // Slight tilt (-10 to 10 degrees)
-
-          gsap.set(sticker, { x: startX, y: startY, rotation: rotation });
+          gsap.set(sticker, { x: startX, y: startY, rotation: Math.random() * 20 - 10 });
 
           gsap.to(sticker, {
-            x: `+=${Math.random() > 0.5 ? moveX : -moveX}`,
-            y: `+=${Math.random() > 0.5 ? moveY : -moveY}`,
-            rotation: `+=${Math.random() * 20 - 10}`, // Add slight rotation during animation
-            duration: duration,
+            x: `+=${Math.random() > 0.5 ? 50 : -50}`,
+            y: `+=${Math.random() > 0.5 ? 30 : -30}`,
+            rotation: `+=${Math.random() * 20 - 10}`,
+            duration: 3 + Math.random() * 2,
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut",
           });
         });
-    });
+      }
+    }
+
+    // Animate left-side stickers
+    if (leftContainer && leftStickers.length > 0) {
+      const containerWidth = leftContainer.clientWidth;
+      const containerHeight = leftContainer.clientHeight;
+
+      if (containerWidth > 0 && containerHeight > 0) {
+        const occupiedPositions = new Set();
+
+        leftStickers.forEach((sticker) => {
+          const stickerWidth = sticker.clientWidth || 50;
+          const stickerHeight = sticker.clientHeight || 50;
+
+          let startX, startY, isOverlapping;
+          do {
+            startX = Math.random() * (containerWidth - stickerWidth);
+            startY = Math.random() * (containerHeight - stickerHeight);
+            isOverlapping = [...occupiedPositions].some(
+              ([x, y]) => Math.abs(x - startX) < stickerWidth && Math.abs(y - startY) < stickerHeight
+            );
+          } while (isOverlapping);
+
+          occupiedPositions.add([startX, startY]);
+
+          gsap.set(sticker, { x: startX, y: startY, rotation: Math.random() * 20 - 10 });
+
+          gsap.to(sticker, {
+            x: `+=${Math.random() > 0.5 ? 20 : -20}`,
+            y: `+=${Math.random() > 0.5 ? 20 : -20}`,
+            rotation: `+=${Math.random() * 20 - 10}`,
+            duration: 3 + Math.random() * 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        });
+      }
+    }
+  });
 }

@@ -21,15 +21,23 @@ const template = () => html`
         </button>
       </div>
 
-      <!-- Stickers Display Section -->
+      <!-- Stickers Display Section (Right Side) -->
       <div id="stickerContainer" class="w-full md:w-1/2 relative h-[900px] md:h-[800px] lg:h-[800px] overflow-hidden">
-        <!-- Floating Stickers -->
+        <!-- Floating Stickers on the Right Side -->
         <img src="/images/stickers/sticker1.png" class="absolute w-24 h-24 sticker" alt="Sticker 1" />
         <img src="/images/stickers/sticker2.png" class="absolute w-36 h-36 sticker" alt="Sticker 2" />
         <img src="/images/stickers/sticker3.png" class="absolute w-32 h-32 sticker" alt="Sticker 3" />
-        <img src="/images/stickers/sticker4.png" class="absolute w-36 h-36 sticker" alt="Sticker 3" />
-        <img src="/images/stickers/sticker5.png" class="absolute w-42 h-36 sticker" alt="Sticker 3" />
+        <img src="/images/stickers/sticker4.png" class="absolute w-36 h-36 sticker" alt="Sticker 4" />
+        <img src="/images/stickers/sticker5.png" class="absolute w-40 h-36 sticker" alt="Sticker 5" />
       </div>
+    </div>
+
+    <!-- Stickers Display Section (Left Side) -->
+    <div id="leftStickerContainer" class="absolute top-0 left-0 w-1/2 h-[250px] overflow-hidden mt-30">
+      <!-- Floating Stickers on the Upper Left Side -->
+      <img src="/images/stickers/sticker6.png" class="absolute w-34 h-34 left-sticker" alt="Sticker 6" />
+      <img src="/images/stickers/sticker7.png" class="absolute w-38 h-36 left-sticker" alt="Sticker 7" />
+      <img src="/images/stickers/sticker8.png" class="absolute w-28 h-28 left-sticker" alt="Sticker 8" />
     </div>
   </div>
 `;
@@ -37,7 +45,7 @@ const template = () => html`
 function homeView(ctx) {
   const homeTemplate = template();
   ctx.render(homeTemplate);
-  homeViewAnimation()
+  setTimeout(() => homeViewAnimation(), 0);
 }
 
 export default homeView;
