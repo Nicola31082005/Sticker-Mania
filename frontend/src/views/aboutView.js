@@ -32,37 +32,20 @@ const template = () => html`
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Team Member 1 -->
         <div class="text-center">
-          <img
-            src="/images/team/team1.jpg"
-            alt="Team Member 1"
-            class="w-32 h-32 rounded-full object-cover mx-auto mb-4"
-            loading="lazy"
-          />
-          <h3 class="text-xl font-semibold text-gray-800">John Doe</h3>
+          <h3 class="text-xl font-semibold text-gray-800">Nicola Dimitrov</h3>
           <p class="text-gray-600">Founder & CEO</p>
         </div>
 
         <!-- Team Member 2 -->
         <div class="text-center">
-          <img
-            src="/images/team/team2.jpg"
-            alt="Team Member 2"
-            class="w-32 h-32 rounded-full object-cover mx-auto mb-4"
-            loading="lazy"
-          />
-          <h3 class="text-xl font-semibold text-gray-800">Jane Smith</h3>
+
+          <h3 class="text-xl font-semibold text-gray-800">Nicola Dimitrov</h3>
           <p class="text-gray-600">Lead Designer</p>
         </div>
 
         <!-- Team Member 3 -->
         <div class="text-center">
-          <img
-            src="/images/team/team3.jpg"
-            alt="Team Member 3"
-            class="w-32 h-32 rounded-full object-cover mx-auto mb-4"
-            loading="lazy"
-          />
-          <h3 class="text-xl font-semibold text-gray-800">Mike Johnson</h3>
+          <h3 class="text-xl font-semibold text-gray-800">Nicola Dimitrov</h3>
           <p class="text-gray-600">Developer</p>
         </div>
       </div>
