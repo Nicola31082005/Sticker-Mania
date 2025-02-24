@@ -7,6 +7,7 @@ import { cartView } from "./views/checkout/cartView";
 import { checkoutView } from "./views/checkout/checkoutView";
 import thankView from "./views/thankView";
 import notFoundView from "./views/404View";
+import { contactView } from "./views/contactView";
 
 // Set middleware
 page(layoutView);
@@ -17,6 +18,7 @@ page("/create", createView)
 page("/cart", cartView)
 page("/checkout", checkoutView)
 page("/thank-you", thankView)
+page("/contact", contactView)
 
 // Catch all wrong requests
 page('*', notFoundView)
