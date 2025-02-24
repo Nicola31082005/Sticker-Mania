@@ -55,7 +55,7 @@ const template = (picturePreview, handleAddToCart, increaseQtty, decreaseQtty) =
                hover:bg-blue-600 transform transition-all hover:scale-105 active:scale-95
                cursor-pointer relative overflow-hidden"
       >
-        <span class="relative z-10">✨ Import Photo</span>
+        <span class="relative z-10">Import Photo</span>
         <div class="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition-opacity"></div>
       </label>
       <input

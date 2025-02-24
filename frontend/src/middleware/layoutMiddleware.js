@@ -40,7 +40,7 @@ const layoutTemplate = (bodyTemplate, errorMessage) => html`
   <!-- Footer -->
   <footer class="bg-gray-900 text-white text-center py-8">
     <div class="container mx-auto space-y-4">
-      <p class="text-lg">&copy; 2025 Sticker Creator. All rights reserved.</p>
+      <p class="text-lg">&copy; 2025 Sticker Mania. All rights reserved.</p>
       <div class="flex justify-center space-x-6">
         <a href="/about" class="hover:text-amber-500 transition-colors">About</a>
         <span class="text-gray-500">|</span>

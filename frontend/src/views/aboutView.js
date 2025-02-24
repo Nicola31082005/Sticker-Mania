@@ -4,9 +4,9 @@ const template = () => html`
   <div class="flex flex-col items-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12">
     <!-- Header Section -->
     <div class="text-center max-w-4xl px-6">
-      <h1 class="text-5xl font-bold text-gray-800 mb-6">About Sticker Creator</h1>
+      <h1 class="text-5xl font-bold text-gray-800 mb-6">About Sticker Mania</h1>
       <p class="text-xl text-gray-600 mb-8">
-        Welcome to Sticker Creator, your go-to platform for designing and ordering custom stickers.
+        Welcome to Sticker Mania, your go-to platform for designing and ordering custom stickers.
         Whether you're looking to create personalized stickers for your business, events, or just for fun,
         we've got you covered!
       </p>
@@ -16,7 +16,7 @@ const template = () => html`
     <div class="bg-white rounded-xl shadow-2xl p-10 max-w-4xl mx-6 mt-8">
       <h2 class="text-3xl font-bold text-gray-800 mb-6">Our Mission</h2>
       <p class="text-lg text-gray-600 mb-6">
-        At Sticker Creator, our mission is to make sticker design and ordering simple, fun, and accessible
+        At Sticker Mania, our mission is to make sticker design and ordering simple, fun, and accessible
         for everyone. We believe that everyone should have the tools to bring their creative ideas to life,
         and we're here to help you do just that.
       </p>
