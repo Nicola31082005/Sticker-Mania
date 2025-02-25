@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import cartService from "../services/cartService";
 import page from "page";
 
-const template = (picturePreview, handleAddToCart, increaseQtty, decreaseQtty) => html`
+const template = (picturePreview, handleAddToCart) => html`
   <div class="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-6">
     <!-- Cool Heading -->
     <div class="absolute top-35 text-center">
@@ -71,28 +71,28 @@ const template = (picturePreview, handleAddToCart, increaseQtty, decreaseQtty) =
           <div class="custom-control">
             <label class="text-gray-700">Size</label>
             <select id="size-select" class="custom-select">
-              <option value="small">Small (3"x3")</option>
-              <option value="medium">Medium (5"x5")</option>
-              <option value="large">Large (8"x8")</option>
+              <option value="1inch">1 inch / 2.54 cm</option>
+              <option value="1.5inch">1.5 inch / 3.8 cm</option>
+              <option value="2inch">2 inch / 5.1 cm</option>
+              <option value="2.5inch">2.5 inch / 6.35 cm</option>
             </select>
           </div>
 
           <div class="custom-control">
             <label class="text-gray-700">Material</label>
             <div class="grid grid-cols-3 gap-4">
-              <button class="material-option" data-material="glossy">Glossy</button>
-              <button class="material-option" data-material="matte">Matte</button>
+              <button class="material-option" data-material="paper">Paper</button>
+              <button class="material-option" data-material="pvc">PVC</button>
               <button class="material-option" data-material="waterproof">Waterproof</button>
             </div>
           </div>
 
           <div class="custom-control">
             <label class="text-gray-700">Quantity</label>
-            <div class="flex items-center space-x-2">
-              <button id="decrease-qty" class="quantity-btn" @click=${decreaseQtty}>-</button>
-              <input id="quantity-input" type="number" value="5" min="5" class="quantity-input" />
-              <button id="increase-qty" class="quantity-btn" @click=${increaseQtty}>+</button>
-            </div>
+            <select id="quantity-select" class="custom-select" @change=${updatePriceDisplay}>
+              <option value="50">50 pcs</option>
+              <option value="100">100 pcs</option>
+            </select>
           </div>
         </div>
       </div>
@@ -117,44 +117,24 @@ function createView(ctx) {
     }
   };
 
-  const createTemplate = template(picturePreview, handleAddToCart, increaseQtty, decreaseQtty);
+  const createTemplate = template(picturePreview, handleAddToCart);
   ctx.render(createTemplate);
-
   setupMaterialSelection();
-
-  updatePriceDisplay()
-
-  // Quantity button functionality
-  function increaseQtty() {
-    const input = document.getElementById("quantity-input");
-    input.value = Number(input.value) + 1;
-    updatePriceDisplay()
-  }
-  function decreaseQtty() {
-    const input = document.getElementById("quantity-input");
-    if (input.value > 5) input.value = Number(input.value) - 1;
-    updatePriceDisplay()
-  }
+  updatePriceDisplay();
 }
 
 const handleAddToCart = async () => {
   const uploadedPhoto = document.getElementById("uploaded-photo");
   const size = document.getElementById("size-select").value;
-  const quantity = document.getElementById("quantity-input").value;
+  const quantity = document.getElementById("quantity-select").value;
   const materialBtn = document.querySelector(".material-option.active");
   const material = materialBtn ? materialBtn.dataset.material : null;
-  const pricePerSticker = 2;
+  const pricePerSticker = 0.50;
 
   if (!uploadedPhoto.src || !size || !material) {
     alert("Please complete all customizations before adding to cart.");
     return;
   }
-
-  if (quantity < 5) {
-    alert("Please add minimum 5 stickers.")
-    return;
-  }
-
 
   const orderData = {
     _id: uuidv4(),
@@ -162,31 +142,17 @@ const handleAddToCart = async () => {
     size,
     material,
     quantity: Number(quantity),
-    price : pricePerSticker * Number(quantity),
+    price: pricePerSticker * Number(quantity),
   };
 
-  // Push orderData to the cart items
   cartService.addItem(orderData);
-  console.log(orderData);
-
-
-  page.redirect("/cart")
-
-}
-
+  page.redirect("/cart");
+};
 
 function updatePriceDisplay() {
-  const quantityInput = document.getElementById("quantity-input");
+  const quantity = document.getElementById("quantity-select").value;
   const priceDisplay = document.getElementById("price-display");
-
-  // Price per sticker
-  const pricePerSticker = 2;
-
-  // Calculate total price
-  const totalPrice = pricePerSticker * Number(quantityInput.value);
-
-  // Update the price display
-  priceDisplay.textContent = totalPrice.toFixed(2);
+  priceDisplay.textContent = (0.5 * Number(quantity)).toFixed(2);
 }
 
 export default createView;

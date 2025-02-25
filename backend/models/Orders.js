@@ -14,7 +14,7 @@ const ordersSchema = new Schema({
       size: {
         type: String,
         enum: {
-          values: ["small", "medium", "large"],
+          values: ["1inch", "1.5inch", "2inch", "2.5inch"],
           message: "Size must be one of: small, medium, large.",
         },
         required: [true, "Size is required."],
@@ -27,12 +27,12 @@ const ordersSchema = new Schema({
       quantity: {
         type: Number,
         required: [true, "Quantity is required."],
-        min: [5, "Minimum quantity is 5."],
+        min: [50, "Minimum quantity is 50."],
       },
       material: {
         type: String,
         enum: {
-          values: ["glossy", "matte", "waterproof"],
+          values: ["paper", "pvc", "waterproof"],
           message: "Material must be one of: glossy, matte, waterproof.",
         },
         required: [true, "Material is required."],
@@ -73,7 +73,7 @@ const ordersSchema = new Schema({
   totalPrice: {
     type: Number,
     required: [true, "Total price is required."],
-    min: [10, "Total price must be at least $10."],
+    min: [25, "Total price must be at least $25."],
   },
 });
 
