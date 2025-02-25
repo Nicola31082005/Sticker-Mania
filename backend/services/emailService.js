@@ -1,46 +1,35 @@
-import dotenv from "dotenv";
-dotenv.config()
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
-// emailService.js
-import nodemailer from "nodemailer";
+// Load environment variables
+dotenv.config();
 
-
-// Create a transporter object using your email service (e.g., Gmail)
+// Create a transporter object using Mailjet's SMTP server
 const transporter = nodemailer.createTransport({
-  service: "gmail", // Use Gmail or any other service
-  secure: false,
+  host: 'in-v3.mailjet.com', // Mailjet SMTP server
+  port: 587, // Port number for Mailjet
+  secure: false, // Use false for TLS
   auth: {
-    user: process.env.EMAIL_USER, // Your email address
-    pass: process.env.EMAIL_PASSWORD, // Your email password or app-specific password
+    user: process.env.MAILJET_API_KEY, // Your Mailjet API Key
+    pass: process.env.MAILJET_API_SECRET, // Your Mailjet API Secret
   },
 });
 
-
-/**
- * Send an email
- * @param {string} to - Recipient email address
- * @param {string} subject - Email subject
- * @param {string} text - Email body (plain text)
- * @param {string} html - Email body (HTML)
- */
-
-
-export const sendEmail = async ({ to, subject, text, html }) => {
+// Function to send email
+export const sendEmail = async ({ to, subject, message }) => {
   try {
-    const mailOptions = {
-      from: process.env.EMAIL_USER, // Sender email address
-      to, // Recipient email address
-      subject, // Email subject
-      text, // Plain text body
-      html, // HTML body
-    };
+    const info = await transporter.sendMail({
+      from: 'stickermarket9@gmail.com', // Verified sender email in Mailjet
+      to,
+      subject,
+      text: message, // Plain text body
+      html: `<p>${message}</p>`, // HTML body
+    });
 
-    // Send the email
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.response);
+    console.log('Email sent:', info.response);
     return info;
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error('Error sending email:', error);
     throw error;
   }
 };
