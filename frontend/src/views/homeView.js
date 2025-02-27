@@ -16,7 +16,7 @@ const template = (handleCreateButton) => html`
         </p>
         <button
           class="px-10 py-5 bg-amber-500 text-white font-semibold text-xl rounded-lg shadow-lg hover:bg-amber-600 transition-transform transform hover:scale-110 active:scale-95"
-          @click=${handleCreateButton}"
+          @click=${handleCreateButton}
         >
           Create Sticker
         </button>
@@ -44,13 +44,16 @@ const template = (handleCreateButton) => html`
 `;
 
 function homeView(ctx) {
-  const homeTemplate = template(handleCreateButton);
-  ctx.render(homeTemplate);
-  setTimeout(() => homeViewAnimation(), 0);
 
   const handleCreateButton = () => {
     page("/create")
   }
+
+  const homeTemplate = template(handleCreateButton);
+  ctx.render(homeTemplate);
+  setTimeout(() => homeViewAnimation(), 0);
+
+
 }
 
 export default homeView;
