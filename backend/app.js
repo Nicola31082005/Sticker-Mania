@@ -7,7 +7,15 @@ import cors from "cors";
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(
+    cors({
+      origin: [
+        "frontend-gamma-smoky-80.vercel.app", // Replace with your frontend URL
+        "http://localhost:3000", // For local development
+      ],
+      credentials: true,
+    })
+  );
 app.use(routes)
 
 
