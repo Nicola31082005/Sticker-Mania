@@ -1,6 +1,6 @@
 export async function submitOrder(orderData) {
 // Submit order to the server
-const response = await fetch("http://localhost:5000/submit-order", {
+const response = await fetch("https://sticker-project.onrender.com/submit-order", {
     method: "POST",
     headers: {
       "Content-Type" : "application/json",
