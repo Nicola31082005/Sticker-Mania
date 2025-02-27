@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(
     cors({
       origin: [
-       "https://frontend-gamma-smoky-80.vercel.app", // Replace with your frontend URL
+       "https://sticker-project-chi.vercel.app/", // Replace with your frontend URL
         "http://localhost:3000", // For local development
       ],
       credentials: true,
