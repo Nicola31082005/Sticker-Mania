@@ -1,7 +1,8 @@
 import { html } from "lite-html";
 import { homeViewAnimation } from "../animations/gsapAnimations";
+import page from "page"
 
-const template = () => html`
+const template = (handleCreateButton) => html`
   <div class="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
     <!-- Main Container -->
     <div class="w-11/12 max-w-6xl flex flex-col md:flex-row items-center space-y-10 md:space-y-0 md:space-x-10">
@@ -15,7 +16,7 @@ const template = () => html`
         </p>
         <button
           class="px-10 py-5 bg-amber-500 text-white font-semibold text-xl rounded-lg shadow-lg hover:bg-amber-600 transition-transform transform hover:scale-110 active:scale-95"
-          onclick="window.location.href='/create'"
+          @click=${handleCreateButton}"
         >
           Create Sticker
         </button>
@@ -43,9 +44,13 @@ const template = () => html`
 `;
 
 function homeView(ctx) {
-  const homeTemplate = template();
+  const homeTemplate = template(handleCreateButton);
   ctx.render(homeTemplate);
   setTimeout(() => homeViewAnimation(), 0);
+
+  const handleCreateButton = () => {
+    page("/create")
+  }
 }
 
 export default homeView;
