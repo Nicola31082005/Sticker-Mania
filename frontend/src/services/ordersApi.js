@@ -1,6 +1,8 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Get from env
+
 export async function submitOrder(orderData) {
   try {
-    const response = await fetch("https://sticker-project.onrender.com/submit-order", {
+    const response = await fetch(`${API_BASE_URL}/submit-order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
