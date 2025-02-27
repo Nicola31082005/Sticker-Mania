@@ -11,6 +11,7 @@ app.use(
     cors({
       origin: [
        "https://sticker-project-chi.vercel.app/", // Replace with your frontend URL
+       "http://localhost:4173",
         "http://localhost:3000", // For local development
       ],
       credentials: true,
