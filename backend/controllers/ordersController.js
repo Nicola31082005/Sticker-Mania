@@ -6,28 +6,53 @@ import { sendEmail } from "../services/emailService.js";
 const ordersController = Router();
 
 ordersController.post("/submit-order", async (req, res) => {
-    const ordersData = req.body;
+  const orderData = req.body;
 
-    try {
-        const newOrder = await ordersService.createOrder(ordersData);
-
-        // Send an order confirmation email
-        try {
-            await sendEmail({
-                to: ordersData.email, // User's email from the form
-                subject: "Order Confirmation", // Email subject
-                message: `Thank you for your order! Your order ID is ${newOrder._id}.`,
-            });
-            console.log(`Order confirmation email sent to ${ordersData.email}`);
-        } catch (emailError) {
-            console.error("Error sending confirmation email:", emailError);
-        }
-
-        res.status(201).json({ message: 'Order created successfully!', order: newOrder });
-    } catch (error) {
-        const err = getErrorMessage(error);
-        return res.status(400).json({ message: err });
+  try {
+    // Validate that required fields are present
+    if (
+      !orderData.cartItems ||
+      !orderData.customerInfo ||
+      !orderData.totalPrice
+    ) {
+      return res.status(400).json({
+        message:
+          "Missing required fields. Please provide cartItems, customerInfo, and totalPrice.",
+      });
     }
+
+    // Create the order
+    const newOrder = await ordersService.createOrder(orderData);
+
+    // Send an order confirmation email
+    try {
+      await sendEmail({
+        to: orderData.customerInfo.email, // User's email from customerInfo
+        subject: "Order Confirmation", // Email subject
+        message: `Thank you for your order! Your order ID is ${newOrder._id}.`,
+      });
+      console.log(
+        `Order confirmation email sent to ${orderData.customerInfo.email}`
+      );
+    } catch (emailError) {
+      console.error("Error sending confirmation email:", emailError);
+      // Continue with order process even if email fails
+    }
+
+    // Return success response
+    res.status(201).json({
+      message: "Order created successfully!",
+      order: {
+        _id: newOrder._id,
+        totalPrice: newOrder.totalPrice,
+        createdAt: newOrder.createdAt,
+      },
+    });
+  } catch (error) {
+    console.error("Order creation error:", error);
+    const err = getErrorMessage(error);
+    return res.status(400).json({ message: err });
+  }
 });
 
 export default ordersController;
