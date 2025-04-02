@@ -1,4 +1,5 @@
 import { html } from "lite-html";
+import page from "page"
 
 const template = () => html`
   <div class="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -26,7 +27,7 @@ const template = () => html`
 `;
 
 function handleHommeButton() {
-  page("/create")
+  page("/")
 }
 
 function thankYouView(ctx) {
