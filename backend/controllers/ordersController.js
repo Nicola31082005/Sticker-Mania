@@ -27,8 +27,8 @@ ordersController.post("/submit-order", async (req, res) => {
     // Send an order confirmation email
     try {
       await sendEmail({
-        to: orderData.customerInfo.email, // User's email from customerInfo
-        subject: "Order Confirmation", // Email subject
+        to: orderData.customerInfo.email,
+        subject: "Order Confirmation",
         message: `Thank you for your order! Your order ID is ${newOrder._id}.`,
       });
       console.log(
@@ -36,7 +36,6 @@ ordersController.post("/submit-order", async (req, res) => {
       );
     } catch (emailError) {
       console.error("Error sending confirmation email:", emailError);
-      // Continue with order process even if email fails
     }
 
     // Return success response

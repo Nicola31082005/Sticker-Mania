@@ -62,7 +62,7 @@ const customerInfoSchema = new Schema({
     minlength: [5, "Address must be at least 5 characters long."],
   },
   phone: {
-    type: String, // String to handle phone numbers with special characters
+    type: String,
     required: [true, "Phone number is required."],
     match: [
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,

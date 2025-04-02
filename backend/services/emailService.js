@@ -6,12 +6,12 @@ dotenv.config();
 
 // Create a transporter object using Mailjet's SMTP server
 const transporter = nodemailer.createTransport({
-  host: 'in-v3.mailjet.com', // Mailjet SMTP server
-  port: 587, // Port number for Mailjet
-  secure: false, // Use false for TLS
+  host: 'in-v3.mailjet.com',
+  port: 587,
+  secure: false,
   auth: {
-    user: process.env.MAILJET_API_KEY, // Your Mailjet API Key
-    pass: process.env.MAILJET_API_SECRET, // Your Mailjet API Secret
+    user: process.env.MAILJET_API_KEY,
+    pass: process.env.MAILJET_API_SECRET,
   },
 });
 
@@ -19,11 +19,11 @@ const transporter = nodemailer.createTransport({
 export const sendEmail = async ({ to, subject, message }) => {
   try {
     const info = await transporter.sendMail({
-      from: 'stickermarket9@gmail.com', // Verified sender email in Mailjet
+      from: 'stickermarket9@gmail.com',
       to,
       subject,
-      text: message, // Plain text body
-      html: `<p>${message}</p>`, // HTML body
+      text: message,
+      html: `<p>${message}</p>`,
     });
 
     console.log('Email sent:', info.response);
