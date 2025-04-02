@@ -68,11 +68,3 @@ Sticker-Mania is a **full-stack web application** that allows users to design cu
    - Display ads for related products (e.g., printing services, art supplies).
 
 ---
-
-## Getting Started 🚀
-
-### Installation
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/sticker-mania.git
-   cd sticker-mania
