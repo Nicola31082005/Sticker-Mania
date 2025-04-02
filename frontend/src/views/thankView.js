@@ -15,15 +15,9 @@ const template = () => html`
         <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 justify-center">
           <button
             class="px-10 py-5 bg-amber-500 text-white font-semibold text-xl rounded-lg shadow-lg hover:bg-amber-600 transition-transform transform hover:scale-110 active:scale-95"
-            onclick="window.location.href='/'"
+            @click=${handleHommeButton}
           >
             Return Home
-          </button>
-          <button
-            class="px-10 py-5 bg-gray-800 text-white font-semibold text-xl rounded-lg shadow-lg hover:bg-gray-900 transition-transform transform hover:scale-110 active:scale-95"
-            onclick="window.location.href='/create'"
-          >
-            Create Another Sticker
           </button>
         </div>
       </div>
@@ -31,7 +25,12 @@ const template = () => html`
 
 `;
 
+function handleHommeButton() {
+  page("/create")
+}
+
 function thankYouView(ctx) {
+
   const thankYouTemplate = template();
   ctx.render(thankYouTemplate);
 }
