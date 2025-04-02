@@ -58,13 +58,4 @@ Sticker-Mania is a **full-stack web application** that allows users to design cu
 
 ---
 
-## Monetization Strategy 💰
 
-1. **Product Sales**:
-   - Profit margin on each sticker order.
-2. **Subscription Model**:
-   - Offer premium features (e.g., exclusive designs, faster delivery) for a monthly fee.
-3. **Advertising**:
-   - Display ads for related products (e.g., printing services, art supplies).
-
----
