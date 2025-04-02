@@ -10,7 +10,6 @@ const createThumbnail = async (imageUrl, maxWidth = 100, maxHeight = 100) => {
       let width = img.width;
       let height = img.height;
 
-      // Calculate new dimensions while maintaining aspect ratio
       if (width > height) {
         if (width > maxWidth) {
           height *= maxWidth / width;
@@ -29,17 +28,15 @@ const createThumbnail = async (imageUrl, maxWidth = 100, maxHeight = 100) => {
       ctx.drawImage(img, 0, 0, width, height);
 
       // Return a low-quality thumbnail
-      resolve(canvas.toDataURL("image/jpeg", 0.3)); // Lower quality for thumbnails
+      resolve(canvas.toDataURL("image/jpeg", 0.3));
     };
     img.onerror = () => {
-      // If image loading fails, return a placeholder
       resolve("");
     };
     img.src = imageUrl;
   });
 };
 
-// Helper function to safely set localStorage with retry capability
 const safeSetItem = async (key, value, retryCount = 3) => {
   try {
     localStorage.setItem(key, value);
@@ -87,12 +84,11 @@ export default {
       // Create thumbnail version of the image to save space
       const thumbnailUrl = await createThumbnail(data.previewUrl);
 
-      // Store the original image URL in a session variable or temporary storage
-      // We'll use a hidden field to store the original URL
+      // use a hidden field to store the original URL
       const itemWithThumbnail = {
         ...data,
-        originalImageUrl: data.previewUrl, // Keep for reference
-        previewUrl: thumbnailUrl, // Use thumbnail in localStorage
+        originalImageUrl: data.previewUrl,
+        previewUrl: thumbnailUrl,
       };
 
       cartItems.push(itemWithThumbnail);
@@ -131,7 +127,6 @@ export default {
       localStorage.removeItem(CART_KEY);
     } catch (error) {
       console.error("Error clearing cart:", error);
-      // If removal fails, try clearing everything
       localStorage.clear();
     }
   },

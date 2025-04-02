@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Get from env
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function submitOrder(orderData) {
   try {
@@ -10,19 +10,15 @@ export async function submitOrder(orderData) {
       body: JSON.stringify(orderData),
     });
 
-    // Check if response exists and is valid
     if (!response) {
       throw new Error("No response received from server");
     }
 
-    // Handle different status codes
     if (!response.ok) {
-      // Try to parse error response, but handle case where it's not valid JSON
       try {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to submit order.");
       } catch (jsonError) {
-        // If parsing fails, use the status text
         throw new Error(
           `Server error: ${response.status} ${
             response.statusText || "Unknown error"

@@ -13,12 +13,11 @@ export async function storageImage(file) {
       return imageUrl;
     } catch (error) {
       console.error("Error uploading file to Firebase:", error);
-      throw error; // Make sure errors are properly handled
+      throw error;
     }
   }
 
 export async function convertBase64ToFile (base64) {
-// Convert image to a file (if it's a Base64 string)
     const file = await fetch(base64)
     .then((res) => res.blob())
     .then((blob) => new File([blob], `sticker-${uuidv4()}.png`, { type: "image/png" }));
